@@ -52,13 +52,16 @@
           }).toDestination();
     
           // Play a chord as a test
-          synth.triggerAttackRelease(["C4", "E4", "G4"], "2n");
+        //   synth.triggerAttackRelease(["C4", "E4", "G4"], "2n");
         }
     
         // Attach event to button
-        window.addEventListener("DOMContentLoaded", () => {
-          const btn = document.getElementById("start-btn");
-          btn.addEventListener("click", startSynth);
+        let synthon = 0
+        window.addEventListener("pointerdown", () => {
+            if(synthon == 0){
+                synthon = 1
+                startSynth()
+            }
         });
       let macrodupe = 0
 
