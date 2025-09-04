@@ -26,24 +26,40 @@
   <div  id="dog-image-container" class="canvas">
 
     <canvas id="canvas" width="1200" height="1200" class="canvas"></canvas>
-
-    <script type="module">
-      import * as Tone from "https://cdn.skypack.dev/tone@14.8.49"; 
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <title>Tone.js Synth</title>
+      <script type="module">
+        import * as Tone from "https://cdn.skypack.dev/tone@14.8.49";
     
-      
-      const synth = new Tone.PolySynth(Tone.Synth, {
-        maxPolyphony: 400, // only 4 notes can play simultaneously
-        envelope: {
-          attack: 0.02,  // short but not zero
-          decay: 0.99,
-          sustain: 0.5,
-          release: 0.5
-      }
-      }).toDestination(); 
-
-
-      await Tone.start();
-
+        let synth;
+    
+        // This function will be triggered by user gesture
+        async function startSynth() {
+          await Tone.start();
+          console.log("Audio context started");
+    
+          synth = new Tone.PolySynth(Tone.Synth, {
+            maxPolyphony: 4,
+            envelope: {
+              attack: 0.02,
+              decay: 0.99,
+              sustain: 0.5,
+              release: 0.5
+            }
+          }).toDestination();
+    
+          // Play a chord as a test
+          synth.triggerAttackRelease(["C4", "E4", "G4"], "2n");
+        }
+    
+        // Attach event to button
+        window.addEventListener("DOMContentLoaded", () => {
+          const btn = document.getElementById("start-btn");
+          btn.addEventListener("click", startSynth);
+        });
       let macrodupe = 0
 
       let rellock = 0
